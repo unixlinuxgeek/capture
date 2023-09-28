@@ -12,13 +12,13 @@ import (
 	"os/exec"
 )
 
-func OneFrame(pth string) (string, error) {
+func OneFrame(pth string, out string) (string, error) {
 	if len(pth) > 0 {
 		if coreutil.Installed("ffmpeg") {
 			// /var/tmp/in.mp4
-			vidName := os.Args[1]
+			vidName := pth //os.Args[1]
 			// /var/tmp/in.jpg
-			imgName := os.Args[2]
+			imgName := out //os.Args[2]
 			f, err := os.OpenFile(vidName, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 777)
 			err = f.Close()
 			if err != nil {
