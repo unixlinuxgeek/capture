@@ -12,8 +12,8 @@ import (
 	"os/exec"
 )
 
-func OneFrame() {
-	if len(os.Args) == 3 {
+func OneFrame(pth string) {
+	if len(pth) > 0 {
 		if coreutil.Installed("ffmpeg1") {
 			// /var/tmp/in.mp4
 			vidName := os.Args[1]
