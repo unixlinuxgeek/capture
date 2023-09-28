@@ -13,46 +13,41 @@ import (
 )
 
 func OneFrame(pth string, out string) (string, error) {
-	if len(pth) > 0 {
-		if coreutil.Installed("ffmpeg") {
-			// /var/tmp/in.mp4
-			vidName := pth //os.Args[1]
-			// /var/tmp/in.jpg
-			imgName := out //os.Args[2]
-			f, err := os.OpenFile(vidName, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 777)
-			err = f.Close()
-			if err != nil {
-				//fmt.Printf("%s File not found!!!\n", vidName)
-				log.Fatal(err)
-			}
+	if coreutil.Installed("ffmpeg") {
+		// /var/tmp/in.mp4
+		vidName := pth //os.Args[1]
+		// /var/tmp/in.jpg
+		imgName := out //os.Args[2]
+		f, err := os.OpenFile(vidName, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 777)
+		err = f.Close()
+		if err != nil {
+			//fmt.Printf("%s File not found!!!\n", vidName)
+			log.Fatal(err)
+		}
 
-			// ffmpeg -y -ss 00:01:00 -i in.mp4 -frames:v 1 -q:v 2 output.jpg
-			app := "/usr/bin/ffmpeg"
-			arg0 := "-y"
-			arg1 := "-ss"
-			arg2 := "00:01:00"
-			arg3 := "-i"
-			arg4 := vidName
-			arg5 := "-vf"
-			arg6 := "scale=200:200"
+		// ffmpeg -y -ss 00:01:00 -i in.mp4 -frames:v 1 -q:v 2 output.jpg
+		app := "/usr/bin/ffmpeg"
+		arg0 := "-y"
+		arg1 := "-ss"
+		arg2 := "00:01:00"
+		arg3 := "-i"
+		arg4 := vidName
+		arg5 := "-vf"
+		arg6 := "scale=200:200"
 
-			arg7 := "-frames:v"
-			arg8 := "1"
-			arg9 := "-q:v"
-			arg10 := "2"
-			arg11 := imgName
+		arg7 := "-frames:v"
+		arg8 := "1"
+		arg9 := "-q:v"
+		arg10 := "2"
+		arg11 := imgName
 
-			cmd := exec.Command(app, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11)
-			err = cmd.Run()
-			if err != nil {
-				log.Fatal(err)
-			}
-		} else {
-			return "", errors.New("ffmpeg is not installed!!!.")
+		cmd := exec.Command(app, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11)
+		err = cmd.Run()
+		if err != nil {
+			log.Fatal(err)
 		}
 	} else {
-		return "", errors.New("Enter  video file path.")
-		//fmt.Fprintf(os.Stderr, "%s\n", "Enter input video file and output image path: ./cap /var/tmp/in.mp4 /var/tmp/out.jpg")
+		return "", errors.New("ffmpeg is not installed!!!.")
 	}
 	return "", errors.New("Error!!!")
 }
