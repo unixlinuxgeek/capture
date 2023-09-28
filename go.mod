@@ -1,4 +1,4 @@
-module prevgen
+module github.com/unixlinuxgeek/capture
 
 go 1.20
 
