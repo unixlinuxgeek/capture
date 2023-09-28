@@ -5,16 +5,16 @@
 package capture
 
 import (
-	"fmt"
+	"errors"
 	"github.com/unixlinuxgeek/coreutil"
 	"log"
 	"os"
 	"os/exec"
 )
 
-func OneFrame(pth string) {
+func OneFrame(pth string) (string, error) {
 	if len(pth) > 0 {
-		if coreutil.Installed("ffmpeg1") {
+		if coreutil.Installed("ffmpeg") {
 			// /var/tmp/in.mp4
 			vidName := os.Args[1]
 			// /var/tmp/in.jpg
@@ -47,8 +47,12 @@ func OneFrame(pth string) {
 			if err != nil {
 				log.Fatal(err)
 			}
+		} else {
+			return "", errors.New("ffmpeg is not installed!!!.")
 		}
 	} else {
-		fmt.Fprintf(os.Stderr, "%s\n", "Enter input video file and output image path: ./cap /var/tmp/in.mp4 /var/tmp/out.jpg")
+		return "", errors.New("Enter  video file path.")
+		//fmt.Fprintf(os.Stderr, "%s\n", "Enter input video file and output image path: ./cap /var/tmp/in.mp4 /var/tmp/out.jpg")
 	}
+	return "", errors.New("Error!!!")
 }
