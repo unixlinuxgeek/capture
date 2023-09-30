@@ -46,6 +46,7 @@ func OneFrame(pth string, out string) (string, error) {
 		if err != nil {
 			log.Fatal(err)
 		}
+		return imgName, nil
 	} else {
 		fmt.Println("no")
 		return "", errors.New("ffmpeg is not installed!!!.")
