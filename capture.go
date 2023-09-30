@@ -18,6 +18,8 @@ func OneFrame(pth string, out string, time time.Time) (string, error) {
 	if coreutil.Installed("ffmpeg") {
 		fmt.Println("pth: " + pth)
 		fmt.Println("out: " + out)
+		HH, MM, SS := time.Clock()
+
 		vidName := pth
 		imgName := out
 		f, err := os.OpenFile(vidName, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 777)
@@ -30,7 +32,7 @@ func OneFrame(pth string, out string, time time.Time) (string, error) {
 		app := "/usr/bin/ffmpeg"
 		arg0 := "-y"
 		arg1 := "-ss"
-		arg2 := time.String() //"00:00:01"
+		arg2 := string(rune(HH)) + ":" + string(rune(MM)) + ":" + string(rune(SS)) //"00:00:01"
 		arg3 := "-i"
 		arg4 := vidName
 		arg5 := "-vf"
