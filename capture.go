@@ -11,9 +11,10 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"time"
 )
 
-func OneFrame(pth string, out string, time string) (string, error) {
+func OneFrame(pth string, out string, time time.Time) (string, error) {
 	if coreutil.Installed("ffmpeg") {
 		fmt.Println("pth: " + pth)
 		fmt.Println("out: " + out)
@@ -29,7 +30,7 @@ func OneFrame(pth string, out string, time string) (string, error) {
 		app := "/usr/bin/ffmpeg"
 		arg0 := "-y"
 		arg1 := "-ss"
-		arg2 := time //"00:00:01"
+		arg2 := time.String() //"00:00:01"
 		arg3 := "-i"
 		arg4 := vidName
 		arg5 := "-vf"
