@@ -6,6 +6,7 @@ package capture
 
 import (
 	"errors"
+	"fmt"
 	"github.com/unixlinuxgeek/coreutil"
 	"log"
 	"os"
@@ -14,14 +15,13 @@ import (
 
 func OneFrame(pth string, out string) (string, error) {
 	if coreutil.Installed("ffmpeg") {
-		// /var/tmp/in.mp4
-		vidName := pth //os.Args[1]
-		// /var/tmp/in.jpg
-		imgName := out //os.Args[2]
+		fmt.Println("pth: " + pth)
+		fmt.Println("out: " + out)
+		vidName := pth
+		imgName := out
 		f, err := os.OpenFile(vidName, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 777)
 		err = f.Close()
 		if err != nil {
-			//fmt.Printf("%s File not found!!!\n", vidName)
 			log.Fatal(err)
 		}
 
@@ -29,7 +29,7 @@ func OneFrame(pth string, out string) (string, error) {
 		app := "/usr/bin/ffmpeg"
 		arg0 := "-y"
 		arg1 := "-ss"
-		arg2 := "00:01:00"
+		arg2 := "00:00:01"
 		arg3 := "-i"
 		arg4 := vidName
 		arg5 := "-vf"
@@ -47,6 +47,7 @@ func OneFrame(pth string, out string) (string, error) {
 			log.Fatal(err)
 		}
 	} else {
+		fmt.Println("no")
 		return "", errors.New("ffmpeg is not installed!!!.")
 	}
 	return "", errors.New("Error!!!")
